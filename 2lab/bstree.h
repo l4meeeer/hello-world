@@ -1,6 +1,9 @@
 typedef struct {
-	char word[];
-	int number;
+	char *value;
+	int key;
+	struct bstree *parent;
+	struct bstree *left;
+	struct bstree *right;
 } bstree;
 
 struct bstree *bstree_create(char *key, int value);

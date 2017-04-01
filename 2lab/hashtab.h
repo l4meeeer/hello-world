@@ -1,7 +1,8 @@
 typedef struct {
-	char word[];
-	int number;
-} listnode
+	char *value;
+	int key;
+	struct listnode *next;
+} listnode;
 
 unsigned int hashtab_hash(char *key);
 void hashtab_init(struct listnode **hashtab);

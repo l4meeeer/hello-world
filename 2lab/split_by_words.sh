@@ -2,7 +2,7 @@
 
 # Usage: split_by_words.sh <text-file>
 
-INFILE=$1
+INFILE=war_and_peace.txt.utf8
 MINCHARS=4
 
 #
