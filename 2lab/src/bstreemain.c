@@ -16,32 +16,41 @@ int getrand(int min, int max)
 
 int main()
 {
-	int n = 0, j,i = 0;
+	int n = 0, i, j;
 	double time, alltime = 0;
-	char words[51203][60]; int w;
+	int w;
 	struct bstree *tree, *node;
-	FILE *in = fopen("book.txt", "r");
-	for(n = 0; n < 51203; n++)
-    {
-		fgets(words[n], 60000, in);
+	FILE *book = fopen("book.txt", "r");
+	while (!feof(book)) { //считает количество слов в книге
+		if (fgetc(book) == '\n') {
+			n++;
+		}
+	}
+	char words[n];
+	for(i = 0; i < n; i++) { //заполняет массив словами из книги
+		fgets(words[n], n, book);
     }
-	fclose(in);
-	/* for(i = 0; i < 5; i++)
-    	printf("%s", words[i]);*/
-	tree = bstree_create(words[0], 0);
-	for (i = 2; i <= 200000; i++) {
-  		bstree_add(tree,words[i-1],i-1);
-		if (i % 10000 == 0) {
-			for (j = 0; j < i; j++) {
+	fclose(book);
+	
+	printf("%s", words[n / 2 + 1]);
+	
+	tree = bstree_create(words[0], 0); //создает корень дерева
+	
+	for (i = 1; i < 200000; i++) {
+  		bstree_add(tree, words[i], i);
+		//if (i % 10000 == 0) {
+			//for (j = 0; j < i; j++) {
 				w = getrand(0, i - 1);
+				FILE *time = fopen("bstreetime.txt", "w");
 				time = wtime();
 				node = bstree_lookup(tree, w);
 				time = wtime() - time;
+				fprintf("n = %d; Elapsed time: %.6f sec.\n", i - 1, alltime);
 				alltime = alltime + time;
-  			}
-  		alltime = alltime / i;
+  			//}
+  		//alltime = alltime / i;
   		printf("n = %d; Elapsed time: %.6f sec.\n", i - 1, alltime);
-  		}
+  		//}
 	}
 	
 	return 0;

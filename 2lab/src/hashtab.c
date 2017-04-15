@@ -65,7 +65,7 @@ void hashtab_delete(struct listnode **hashtab, char *key) {
 			}
 			free(p);
 			
-			return -1;
+			return;
 		}
 		prev = p;
 	}

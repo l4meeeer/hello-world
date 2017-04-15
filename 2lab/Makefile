@@ -1,4 +1,4 @@
-all: main
+all: bstreemain hashtabmain
 
 bstreemain: bstreemain.o bstree.o
 	gcc -Wall -Werror -o bin/bstreemain build/bstreemain.o build/bstree.o

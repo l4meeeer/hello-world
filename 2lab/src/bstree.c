@@ -3,14 +3,14 @@
 #include "bstree.h"
 
 struct bstree *bstree_create(char *key, int value) {
-	struct bstree *node;
-	node = malloc(sizeof(*node));
-	if(node != NULL) {
+	struct bstree *node = malloc(sizeof(*node));
+	if (node != NULL) {
 		node->key = key;
 		node->value = value;
 		node->left = NULL;
 		node->right = NULL;
 	}
+	
 	return node;
 }
 
@@ -18,16 +18,17 @@ void bstree_add(struct bstree *tree, char *key, int value) {
 	struct bstree *parent, *node;
 	if (tree == NULL) {
 	   
-		return -1;
+		return;
 	}
 	for (parent = tree; tree != NULL;) {
 		parent = tree;
-		if(key < tree->key) {
+		if (key < tree->key) {
 			tree = tree->left;
 		} else if (key > tree->key) {
 			tree = tree->right;
 		} else {
-			return -1;
+			
+			return;
 		}
 	}
 	node = bstree_create(key, value);
