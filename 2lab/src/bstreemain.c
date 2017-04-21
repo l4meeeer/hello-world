@@ -26,13 +26,11 @@ int main()
 			n++;
 		}
 	}
-	char words[n];
+	char words[n][60];
 	for(i = 0; i < n; i++) { //заполняет массив словами из книги
 		fgets(words[n], n, book);
     }
 	fclose(book);
-	
-	printf("%s", words[n / 2 + 1]);
 	
 	tree = bstree_create(words[0], 0); //создает корень дерева
 	

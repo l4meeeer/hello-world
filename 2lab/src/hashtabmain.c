@@ -1,11 +1,12 @@
 #include <stdio.h>
+#include <time.h>
 #include <stdlib.h>
 #include <sys/time.h>
 #include <string.h>
 #include "hashtab.h"
 
-#define HASHTAB_SIZE 600000
-#define HASHTAB_MUL  31
+#define HASHTAB_SIZE 10000
+#define HASHTAB_MUL  10
 
 double wtime() {
 	struct timeval t;
@@ -20,30 +21,37 @@ int getrand(int min, int max)
 
 int main()
 {
-	int n, i = 0, j;
+	int n = 0, i = 0, j;
+	srand(time(NULL));
 	double time, alltime = 0;
 	struct listnode *node;
 	struct listnode *hashtab[HASHTAB_SIZE];
-	char words[51203][60], *w;
-	FILE *in = fopen("book.txt", "r");
-	for(n = 0; n < 51203; n++) {
-		fgets(words[n], 60000, in);
+	while (!feof(book)) { //считает количество слов в книге
+		if (fgetc(book) == '\n') {
+			n++;
+		}
 	}
-	fclose(in);
+	char words[n][60], *w;
+	FILE *book = fopen("book.txt", "r");
+	for(n = 0; n < n; n++) {
+		fgets(words[n], 60000, book);
+	}
+	fclose(book);
 	hashtab_init(hashtab);
-	for (i = 2; i < 200000; i++) {
-		hashtab_add(hashtab, words[i % 51203], i - 1);
+	for (i = 1; i < 200000; i++) {
+		hashtab_add(hashtab, words[i % 51203], i);
 		if (i % 10000 == 0) {
-			for (j = 0; j < 2; j++) {
-				w = words[getrand(0, i - 1)];
+			for (j = 0; j < 10000000; j++) {
+				w = words[rand() % n];
 				time = wtime();
-				hashtab_delete(hashtab, w);
 				node = hashtab_lookup(hashtab, w);
+				//hashtab_delete(hashtab, w);
 				time = wtime() - time;
         	 	alltime = alltime + time;
 			}
-        alltime = alltime / i;
-		printf("n = %d; Elapsed time: %.15f sec.\n", i - 1, alltime);
+        alltime = alltime / 10000000;
+		printf("n = %d; Elapsed time: %.15f sec.\n", i, alltime);
+		alltime = 0;
 		}
 	}
 	
